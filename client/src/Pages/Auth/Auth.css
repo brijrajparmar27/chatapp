@@ -1,0 +1,45 @@
+.auth {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.auth .auth_content {
+  padding: 30px;
+  background-color: rgb(65, 65, 65);
+  border-radius: 30px;
+}
+.auth .auth_content .auth_form {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  width: 400px;
+  height: 300px;
+}
+.auth .auth_content .auth_form .inputtb {
+  height: 30px;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  padding: 2px 5px;
+  background-color: rgb(214, 214, 214);
+}
+.auth .auth_content .auth_form .auth_heading {
+  font-size: 50px;
+  margin-bottom: 20px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: rgb(255, 191, 0);
+}
+
+.auth .auth_content .auth_form .submitauth {
+  height: 40px;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  background-color: rgb(255, 191, 0);
+}
+.auth .auth_content .auth_form .label {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: gainsboro;
+}
