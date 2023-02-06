@@ -6,25 +6,21 @@ import useSessionContext from "../../Hooks/useSessionContext";
 const Home = ({ socket }) => {
   const msgRef = useRef();
 
-  const { setSession } = useSessionContext();
-  const [msg, setMsg] = useState();
+  const { setSession, session } = useSessionContext();
+  const [msg, setMsg] = useState([]);
+
+
+  socket.on("message", (payload) => {
+    setMsg(prev => [...prev, payload]); //remains empty for some reason
+    console.log(payload); //prints correctly only when user himself sends, texts from others dont reflect
+  });
 
   const handleMsgSend = (e) => {
     e.preventDefault();
     const newText = msgRef.current.value;
-    // newText && console.log(newText);
+    socket.emit("message", { message: newText, isToast: false, room: session.room })
     e.target.reset();
   };
-
-  useEffect(() => {
-    socket.on("message", ({ message, isToast }) => {
-      setMsg((prev) => [...prev, { message, isToast }]);
-    });
-  }, []);
-
-  useEffect(() => {
-    msg && console.log(msg);
-  }, [msg]);
 
   return (
     <div className="home">

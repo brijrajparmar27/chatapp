@@ -2,7 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Auth from "./Pages/Auth/Auth";
 import Home from "./Pages/Home/Home";
-import { io } from "socket.io-client";
+import io  from "socket.io-client";
 import useSessionContext from "./Hooks/useSessionContext";
 
 const socket = io("http://localhost:4000/");

@@ -6,11 +6,11 @@ import { BrowserRouter } from "react-router-dom";
 import { SessionProvider } from "./Context/SessionContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <BrowserRouter>
       <SessionProvider>
         <App />
       </SessionProvider>
     </BrowserRouter>
-  </React.StrictMode>
+  // </React.StrictMode>
 );

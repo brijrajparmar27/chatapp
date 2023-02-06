@@ -3,20 +3,27 @@ import useSessionContext from "../../Hooks/useSessionContext";
 import "./Auth.css";
 
 const Auth = ({ socket }) => {
+
   const { setSession } = useSessionContext();
+
+  const nameRef = useRef();
+  const roomRef = useRef();
+
   const handleRoomEnter = (e) => {
     e.preventDefault();
+
     let username = nameRef.current.value.trim();
     let room = roomRef.current.value.trim();
+
     if (username && room) {
       console.log("username " + username + " room " + room);
       socket.emit("join", { username, room });
       setSession({ username, room });
     }
+
     e.target.reset();
   };
-  const nameRef = useRef();
-  const roomRef = useRef();
+
   return (
     <div className="auth">
       <div className="auth_content">
