@@ -20,15 +20,15 @@ const Home = ({ socket }) => {
     e.target.reset();
   };
 
-  useEffect(() => {
-    socket.on("message", ({ message, isToast }) => {
-      console.log(message);
-      // setMsg((prev) => [...prev, { message, isToast }]);
-    });
-    // () => {
-    //   socket.disconnect();
-    // };
-  }, []);
+  // useEffect(() => {
+  socket.on("message", ({ message, isToast }) => {
+    console.log(message);
+    setMsg((prev) => [...prev, { message, isToast }]);
+  });
+  // () => {
+  //   socket.disconnect();
+  // };
+  // }, []);
 
   return (
     <div className="home">

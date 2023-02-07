@@ -31,6 +31,7 @@ io.on("connect", (socket) => {
       isToast: true,
     });
   });
+
   socket.on("message", ({ message, room, isToast }) => {
     console.log("Message recieved!");
     socket.to(room).emit("message", {
