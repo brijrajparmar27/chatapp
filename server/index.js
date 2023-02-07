@@ -20,23 +20,20 @@ io.on("connect", (socket) => {
   socket.on("join", ({ room, username }) => {
     console.log("Client connected!");
     socket.join(room);
+    socket.emit("joined", {
+      message: `Hello ${username}, Welcome to Room ${room}`,
+      isToast: true,
+    });
 
     socket.to(room).emit("message", {
       message: `${username} has joined the Room`,
       isToast: true,
     });
 
-    socket.emit("message", {
-      message: `Hello ${username}, Welcome to Room ${room}`,
-      isToast: true,
+    socket.on("postMessage", (payload) => {
+      console.log("Message recieved!");
+      console.log(payload);
+      socket.to(room).emit("message", payload);
     });
-  });
-
-  socket.on("message", ({ message, room, isToast }) => {
-    console.log("Message recieved!");
-    socket.to(room).emit("message", {
-      message: message,
-      isToast: false,
-    });
-  });
+  }); //not the sender
 });

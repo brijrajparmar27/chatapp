@@ -7,28 +7,52 @@ const Home = ({ socket }) => {
   const msgRef = useRef();
   console.log({ socket });
   const { setSession, session } = useSessionContext();
-  const [msg, setMsg] = useState();
+  const [msg, setMsg] = useState([]);
 
   const handleMsgSend = (e) => {
     e.preventDefault();
     const newText = msgRef.current.value;
-    socket.emit("message", {
+    socket.emit("postMessage", {
       message: newText,
       room: session.room,
       isToast: false,
+      user: session.username,
     });
+    setMsg((prev) => [
+      ...prev,
+      {
+        message: newText,
+        room: session.room,
+        isToast: false,
+        user: session.username,
+      },
+    ]);
     e.target.reset();
   };
 
-  // useEffect(() => {
-  socket.on("message", ({ message, isToast }) => {
-    console.log(message);
-    setMsg((prev) => [...prev, { message, isToast }]);
-  });
-  // () => {
-  //   socket.disconnect();
-  // };
-  // }, []);
+  useEffect(() => {
+    socket.on("joined", (payload) => {
+      //welcome to room doest reach
+      console.log(payload);
+      setMsg((prev) => [...prev, payload]);
+    });
+    socket.on("message", (payload) => {
+      //welcome to room doest reach
+      console.log(payload);
+      setMsg((prev) => [...prev, payload]);
+    });
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
+  const isSender = (each) => {
+    if (each.user == session.username) {
+      return { float: "right" };
+    } else {
+      return { float: "left" };
+    }
+  };
 
   return (
     <div className="home">
@@ -44,9 +68,17 @@ const Home = ({ socket }) => {
           </div>
           <div className="chat_section">
             {msg &&
+              msg.length > 0 &&
               msg.map((each) => {
                 console.log(each);
-                return <p>{each.message}</p>;
+                return (
+                  <div className="chatbox">
+                    <div className="bubble" style={isSender(each)}>
+                      <p className="sender">{each.user}</p>
+                      <p>{each.message}</p>
+                    </div>
+                  </div>
+                );
               })}
           </div>
           <form className="chat_footer" onSubmit={handleMsgSend}>

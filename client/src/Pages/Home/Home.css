@@ -70,6 +70,9 @@
 }
 .home .home_contain .chat_contain .chat_section {
   background-color: gray;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   flex: 8;
   overflow-y: auto;
 }
@@ -93,4 +96,19 @@
 .home .home_contain .chat_contain .chat_footer .msg_submit {
   flex: 2;
   background-color: rgb(255, 174, 0);
+}
+.chatbox {
+}
+.bubble {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 20px;
+  height: fit-content;
+  width: fit-content;
+  padding: 10px;
+  margin: 0px 10px;
+}
+.bubble .sender {
+  font-weight: bold;
 }
