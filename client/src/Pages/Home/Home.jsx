@@ -5,26 +5,30 @@ import useSessionContext from "../../Hooks/useSessionContext";
 
 const Home = ({ socket }) => {
   const msgRef = useRef();
-
-  const { setSession } = useSessionContext();
+  console.log({ socket });
+  const { setSession, session } = useSessionContext();
   const [msg, setMsg] = useState();
 
   const handleMsgSend = (e) => {
     e.preventDefault();
     const newText = msgRef.current.value;
-    // newText && console.log(newText);
+    socket.emit("message", {
+      message: newText,
+      room: session.room,
+      isToast: false,
+    });
     e.target.reset();
   };
 
   useEffect(() => {
     socket.on("message", ({ message, isToast }) => {
-      setMsg((prev) => [...prev, { message, isToast }]);
+      console.log(message);
+      // setMsg((prev) => [...prev, { message, isToast }]);
     });
+    // () => {
+    //   socket.disconnect();
+    // };
   }, []);
-
-  useEffect(() => {
-    msg && console.log(msg);
-  }, [msg]);
 
   return (
     <div className="home">
