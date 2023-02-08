@@ -30,6 +30,11 @@ const Home = ({ socket }) => {
     e.target.reset();
   };
 
+  const handleLeaveRoom = () => {
+    socket.emit("leave", { username, room });
+    setSession(null);
+  };
+
   useEffect(() => {
     socket.on("joined", (payload) => {
       //welcome to room doest reach
@@ -47,10 +52,14 @@ const Home = ({ socket }) => {
   }, []);
 
   const isSender = (each) => {
-    if (each.user == session.username) {
-      return { float: "right" };
+    if (each.user) {
+      if (each.user == session.username) {
+        return { justifyContent: "flex-end" };
+      } else {
+        return { justifyContent: "flex-start" };
+      }
     } else {
-      return { float: "left" };
+      return { justifyContent: "center" };
     }
   };
 
@@ -59,11 +68,7 @@ const Home = ({ socket }) => {
       <div className="home_contain">
         <div className="chat_contain">
           <div className="chat_header">
-            <BiArrowBack
-              onClick={() => {
-                setSession(null);
-              }}
-            />
+            <BiArrowBack onClick={handleLeaveRoom} />
             <h2>Room title</h2>
           </div>
           <div className="chat_section">
@@ -72,8 +77,8 @@ const Home = ({ socket }) => {
               msg.map((each) => {
                 console.log(each);
                 return (
-                  <div className="chatbox">
-                    <div className="bubble" style={isSender(each)}>
+                  <div className="chatbox" style={isSender(each)}>
+                    <div className="bubble">
                       <p className="sender">{each.user}</p>
                       <p>{each.message}</p>
                     </div>

@@ -98,6 +98,7 @@
   background-color: rgb(255, 174, 0);
 }
 .chatbox {
+  display: flex;
 }
 .bubble {
   display: flex;

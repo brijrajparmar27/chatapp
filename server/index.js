@@ -17,6 +17,13 @@ io.on("connect", (socket) => {
     console.log(socket.id, " Disconnected");
   });
 
+  socket.on("leave", ({ room, username }) => {
+    socket.to(room).emit("message", {
+      message: `${username} has Left the Room`,
+      isToast: true,
+    });
+  });
+
   socket.on("join", ({ room, username }) => {
     console.log("Client connected!");
     socket.join(room);
